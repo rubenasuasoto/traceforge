@@ -1,0 +1,30 @@
+[workspace]
+members = [
+  "crates/traceforge-core",
+  "crates/traceforge-cli",
+  "crates/traceforge-wasm",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0"
+authors = ["Rubén Asua Soto"]
+repository = "https://github.com/rubenasuasoto/traceforge"
+
+[workspace.dependencies]
+anyhow = "1.0"
+chrono = { version = "0.4", features = ["serde"] }
+clap = { version = "4.5", features = ["derive"] }
+csv = "1.3"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+sha2 = "0.10"
+thiserror = "2.0"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
+

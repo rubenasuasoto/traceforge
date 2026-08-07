@@ -1,0 +1,22 @@
+{
+  "build_ns": 10930500,
+  "environment": {
+    "arch": "x86_64",
+    "logical_processors": "4",
+    "os": "windows",
+    "processor": "Intel64 Family 6 Model 94 Stepping 3, GenuineIntel",
+    "rust": "1.97.1 stable"
+  },
+  "events": 1000,
+  "indexed_mean_ns": 24911,
+  "indexed_total_ns": 2491100,
+  "iterations": 100,
+  "linear_mean_ns": 322222,
+  "linear_total_ns": 32222200,
+  "matches": 26,
+  "note": "Local observation, not a universal performance claim",
+  "observed_speedup": 12.934928344907872,
+  "query": "outcome:failure AND user:ana",
+  "recorded_at": "2026-08-07T06:39:59.757866400+00:00",
+  "seed": 42
+}

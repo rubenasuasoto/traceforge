@@ -1,0 +1,20 @@
+[package]
+name = "traceforge-wasm"
+version.workspace = true
+edition.workspace = true
+license-file = "../../LICENSE"
+repository.workspace = true
+description = "Typed WebAssembly boundary for TraceForge"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+serde-wasm-bindgen = "0.6"
+traceforge-core = { path = "../traceforge-core" }
+wasm-bindgen = "0.2"
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false

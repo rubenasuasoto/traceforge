@@ -1,0 +1,18 @@
+{
+  "folders": [{ "path": "." }],
+  "settings": {
+    "editor.formatOnSave": true,
+    "rust-analyzer.check.command": "clippy",
+    "typescript.tsdk": "web/node_modules/typescript/lib"
+  },
+  "extensions": {
+    "recommendations": [
+      "rust-lang.rust-analyzer",
+      "vadimcn.vscode-lldb",
+      "dtsvet.vscode-wasm",
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint"
+    ]
+  }
+}
+

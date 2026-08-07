@@ -1,0 +1,21 @@
+[package]
+name = "traceforge-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Native command-line interface for TraceForge"
+
+[[bin]]
+name = "traceforge"
+path = "src/main.rs"
+
+[dependencies]
+anyhow.workspace = true
+chrono.workspace = true
+clap.workspace = true
+csv.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+traceforge-core = { path = "../traceforge-core" }

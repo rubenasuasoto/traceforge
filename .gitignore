@@ -1,0 +1,12 @@
+/target/
+/web/node_modules/
+/web/dist/
+.env
+.env.*
+!.env.example
+.DS_Store
+*.profraw
+benchmark-results/local/
+datasets/*.tfi
+/web/playwright-report/
+/web/test-results/

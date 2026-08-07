@@ -1,0 +1,21 @@
+{
+  "name": "traceforge-wasm",
+  "type": "module",
+  "description": "Typed WebAssembly boundary for TraceForge",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rubenasuasoto/traceforge"
+  },
+  "files": [
+    "traceforge_wasm_bg.wasm",
+    "traceforge_wasm.js",
+    "traceforge_wasm.d.ts"
+  ],
+  "main": "traceforge_wasm.js",
+  "types": "traceforge_wasm.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
