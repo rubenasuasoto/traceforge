@@ -9,7 +9,7 @@ test.beforeEach(async ({ page }) => {
 
 test('loads WASM, runs a query and preserves language', async ({ page }) => {
   await page.goto('/')
-  await expect(page.getByText('TRACEFORGE')).toBeVisible({ timeout: 15_000 })
+  await expect(page.getByRole('link', { name: 'TraceForge home' })).toBeVisible({ timeout: 15_000 })
   const editor = page.getByRole('textbox', { name: /Query|Consulta/ })
   await expect(editor).toBeVisible()
   await editor.fill('outcome:failure AND user:ana')
@@ -22,7 +22,16 @@ test('loads WASM, runs a query and preserves language', async ({ page }) => {
 
 test('has no horizontal page overflow', async ({ page }) => {
   await page.goto('/')
-  await expect(page.getByText('TRACEFORGE')).toBeVisible({ timeout: 15_000 })
-  const overflows = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)
-  expect(overflows).toBe(false)
+  await expect(page.getByRole('link', { name: 'TraceForge home' })).toBeVisible({ timeout: 15_000 })
+  const overflow = await page.evaluate(() => ({
+    page: { scrollWidth: document.documentElement.scrollWidth, clientWidth: document.documentElement.clientWidth },
+    elements: [...document.querySelectorAll<HTMLElement>('body *')]
+      .filter((element) => {
+        const rect = element.getBoundingClientRect()
+        return rect.right > document.documentElement.clientWidth + 1 || rect.left < -1
+      })
+      .slice(0, 10)
+      .map((element) => ({ tag: element.tagName, className: element.className, right: Math.round(element.getBoundingClientRect().right) })),
+  }))
+  expect(overflow.page.scrollWidth, JSON.stringify(overflow)).toBeLessThanOrEqual(overflow.page.clientWidth)
 })

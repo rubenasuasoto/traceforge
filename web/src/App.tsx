@@ -9,6 +9,17 @@ type WasmEngine = TraceForgeEngine
 const PAGE_SIZE = 12
 const DEFAULT_QUERY = 'outcome:failure AND (user:ana OR severity:high)'
 
+function normalizeStats(value: unknown): Stats {
+  const raw = value && typeof value === 'object' ? value as Partial<Stats> : {}
+  return {
+    events: Number(raw.events ?? 0),
+    nodes: Number(raw.nodes ?? 0),
+    edges: Number(raw.edges ?? 0),
+    localOnly: raw.localOnly !== false,
+    engine: typeof raw.engine === 'string' ? raw.engine : 'traceforge-core/0.1.0',
+  }
+}
+
 function App() {
   const [language, setLanguage] = useState<Language>(() => (localStorage.getItem('traceforge-language') as Language) || (navigator.language.startsWith('es') ? 'es' : 'en'))
   const [engine, setEngine] = useState<WasmEngine | null>(null)
@@ -30,7 +41,7 @@ function App() {
 
   const refreshPanels = useCallback((active: WasmEngine, nextQuery = query) => {
     try {
-      setStats(active.stats() as Stats)
+      setStats(normalizeStats(active.stats()))
       setResult(active.query(nextQuery, 10_000) as QueryResult)
       setDetections(active.detections() as Detection[])
       setGraph(active.graph() as GraphPayload)
@@ -47,7 +58,7 @@ function App() {
       if (!active) return
       const instance = new TraceForgeEngine()
       setEngine(instance)
-      setStats(instance.stats() as Stats)
+      setStats(normalizeStats(instance.stats()))
       setResult(instance.query(DEFAULT_QUERY, 10_000) as QueryResult)
       setDetections(instance.detections() as Detection[])
       setGraph(instance.graph() as GraphPayload)

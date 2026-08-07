@@ -2,7 +2,7 @@
 name = "traceforge-wasm"
 version.workspace = true
 edition.workspace = true
-license-file = "../../LICENSE"
+license.workspace = true
 repository.workspace = true
 description = "Typed WebAssembly boundary for TraceForge"
 

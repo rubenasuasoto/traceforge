@@ -14,6 +14,16 @@ struct GraphPayload {
     edges: Vec<traceforge_core::graph::GraphEdge>,
 }
 
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+struct StatsPayload {
+    events: usize,
+    nodes: usize,
+    edges: usize,
+    local_only: bool,
+    engine: &'static str,
+}
+
 #[wasm_bindgen]
 pub struct TraceForgeEngine {
     index: SearchIndex,
@@ -94,13 +104,13 @@ impl TraceForgeEngine {
     }
 
     pub fn stats(&self) -> Result<JsValue, JsValue> {
-        to_js(&serde_json::json!({
-            "events": self.index.events().len(),
-            "nodes": self.graph.nodes().len(),
-            "edges": self.graph.edges().len(),
-            "localOnly": true,
-            "engine": "traceforge-core/0.1.0"
-        }))
+        to_js(&StatsPayload {
+            events: self.index.events().len(),
+            nodes: self.graph.nodes().len(),
+            edges: self.graph.edges().len(),
+            local_only: true,
+            engine: "traceforge-core/0.1.0",
+        })
     }
 }
 
