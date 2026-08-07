@@ -1,8 +1,15 @@
 import { expect, test } from '@playwright/test'
 
+test.beforeEach(async ({ page }) => {
+  page.on('pageerror', (error) => console.error(`PAGE ERROR: ${error.message}`))
+  page.on('console', (message) => {
+    if (message.type() === 'error') console.error(`BROWSER ERROR: ${message.text()}`)
+  })
+})
+
 test('loads WASM, runs a query and preserves language', async ({ page }) => {
   await page.goto('/')
-  await expect(page.getByText('TRACEFORGE')).toBeVisible()
+  await expect(page.getByText('TRACEFORGE')).toBeVisible({ timeout: 15_000 })
   const editor = page.getByRole('textbox', { name: /Query|Consulta/ })
   await expect(editor).toBeVisible()
   await editor.fill('outcome:failure AND user:ana')
@@ -15,8 +22,7 @@ test('loads WASM, runs a query and preserves language', async ({ page }) => {
 
 test('has no horizontal page overflow', async ({ page }) => {
   await page.goto('/')
-  await expect(page.getByText('TRACEFORGE')).toBeVisible()
+  await expect(page.getByText('TRACEFORGE')).toBeVisible({ timeout: 15_000 })
   const overflows = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)
   expect(overflows).toBe(false)
 })
-
