@@ -37,10 +37,13 @@ jobs:
     needs: cli
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
           merge-multiple: true
+      - run: cp datasets/sample-4k.jsonl artifacts/traceforge-synthetic-4k.jsonl
+      - run: cp datasets/sample-250.csv artifacts/traceforge-synthetic-250.csv
       - run: sha256sum artifacts/* > artifacts/SHA256SUMS.txt
       - uses: softprops/action-gh-release@v2
         with:
